@@ -1,0 +1,182 @@
+%formcontrol-shared {
+  padding: 0;
+  height: auto;
+  border: none;
+
+  &:hover {
+    background-color: lightblue;
+  }
+
+  &:focus {
+    // outline: 2px solid #5e9ed7 ;
+    background-color: yellow;
+  }
+}
+
+.container {
+  margin-top: 128px;
+
+  .page {
+    width: 21cm;
+    height: 29.7cm;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 0.6cm;
+    box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+
+    .addPageButton {
+      position: absolute;
+      margin-left: -60px;
+      margin-top: -40px;
+    }
+
+    .content {
+      padding-top: 27mm;
+      padding-bottom: 10mm;
+      padding-left: 25mm;
+      padding-right: 25mm;
+
+      // 1123px = 26cm
+      height: 26cm;
+      // overflow: auto;
+
+      .formDesign {
+        .client {
+          >input {
+            @extend %formcontrol-shared;
+          }
+
+          >div {
+            >input {
+              @extend %formcontrol-shared;
+            }
+          }
+        }
+
+        .info {
+
+          //todo: geht nicht
+          // text-align: right;
+          >input {
+            @extend %formcontrol-shared;
+            text-align: right;
+
+          }
+        }
+
+        .invoice-info {
+          padding: 30px 0 ;
+          .label {
+              font-size: 35px;
+              // font-weight: 300;
+              letter-spacing: 5px;
+              color: rgb(0, 0, 0);
+              text-decoration: underline;
+          }
+          .value {
+            > input {
+              @extend %formcontrol-shared;
+              text-align: right;
+            }
+          }
+        }
+
+        .work-info {
+          .description {
+            border-bottom: 2px solid;
+            width: 60%;
+            // vertical-align: bottom;
+            > textarea {
+              width: 100%;
+              vertical-align: bottom;
+              @extend %formcontrol-shared;
+            }
+          }
+          .padding {
+            padding: 5px 0;
+          }
+          > textarea {
+            @extend %formcontrol-shared;
+            width: 100%;
+            vertical-align: top;
+          }
+        }
+
+        #service {
+          padding-bottom: 10px;
+          display: grid;
+          grid-template-columns: 10% 80% 10%;
+          grid-template-rows: auto auto;
+          gap: 0px 0px;
+          grid-template-areas: "pos title price" "pos detail price";
+          .pos {
+             grid-area: pos;
+            }
+          .price {
+             grid-area: price;
+             align-self: end;
+             text-align: right;
+             > input {
+              @extend %formcontrol-shared;
+             }
+            }
+          .title {
+            grid-area: title;
+          }
+          .detail { 
+            grid-area: detail;
+          }
+          > textarea {
+            grid-area: title;
+            align-self: end;
+            @extend %formcontrol-shared;
+             width: 100%;
+           }         
+        }
+      }
+    }
+  }
+}
+
+@media print {
+  .container {
+    margin-top: 0;
+    margin-bottom: 0;
+
+    .page {
+      box-shadow: none;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+      page-break-inside: avoid;
+      margin-bottom: 0px;
+    }
+
+    footer {
+      display: block !important;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
+
+label {
+  display: block;
+  width: 6em;
+  margin: .5em 0;
+  color: #607D8B;
+  font-weight: bold;
+}
+
+input {
+  height: 2em;
+  font-size: 1em;
+  padding-left: .4em;
+}
+
+textarea {
+  font-size: 1em;
+  resize: none;
+}

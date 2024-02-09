@@ -1,0 +1,219 @@
+<div class="container">
+    <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+    <ng-container *ngFor="let page of pages; let i = index; let first = first">
+        <div *ngIf="first; else sndPage" id="{{ i+1 }}" class="page">
+            <div class="content">
+                <div class="formDesign" resizeObserver (resize)="onResize($event)">
+                        <div fxLayout="row" fxLayoutAlign="space-between">
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="space-between" class="invoice-info">
+                            <div class="label">INVOICE Type 2</div>
+                        </div>
+                        <div class="work-info">
+                            <div class="description">
+                                <textarea 
+                                class="descriptionField"
+                                autosize
+                                [minRows]="1"
+                                formControlName="workDescription"
+                                placeholder="Describe"
+                            ></textarea>
+                            </div>     
+                            <div class="padding"></div>                      
+                            <textarea
+                                autosize
+                                [minRows]="1"
+
+                                formControlName="salutation"
+                                placeholder="Greeting"
+                            ></textarea>
+                            <div class="padding"></div>                      
+
+                        </div>
+                        <div class="service-table" formArrayName="services">
+                            <ng-container 
+                                *ngFor="let service of services.controls; let j = index;"
+                                [formGroupName]="j" 
+                            >
+                                <div id="service" style="background-color: red;" *ngIf="page.growth; else elseBlock" >   
+                                    
+                                    <div class="pos">Pos.: {{j+1}}</div>
+                                    <textarea 
+                                        class="title"
+                                        formControlName="title"
+
+                                        autosize
+                                        [minRows]="1"
+
+                                        placeholder="Caption"
+                                    >
+                                    </textarea>
+                                    <textarea 
+                                        class="detail"
+                                        formControlName="detail"
+
+                                        autosize
+                                        [minRows]="1"
+
+                                        placeholder="Describe"
+
+                                    >
+                                    </textarea>
+                                    <div class="price">
+                                        <input
+                                            class="price"
+                                            formControlName="price"
+                                            AutoSizeInput
+                                            placeholder="Price"
+                                        >
+                                    </div>
+                                </div>
+                                <ng-template #elseBlock>
+                                    <div id="service" style="background-color: blue;" *ngIf="j < page.lastServiceElement">   
+                                    
+                                        <div class="pos">Pos.: {{j+1}}</div>
+                                        <textarea 
+                                            class="title"
+                                            formControlName="title"
+    
+                                            autosize
+                                            [minRows]="1"
+    
+                                        >
+                                        </textarea>
+                                        <textarea 
+                                            class="detail"
+                                            formControlName="detail"
+    
+                                            autosize
+                                            [minRows]="1"
+    
+    
+                                        >
+                                        </textarea>
+                                        <div class="price">
+                                            <input
+                                                class="price"
+                                                formControlName="price"
+                                                AutoSizeInput
+                                            >
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                            <button type="button" color="accent" *ngIf="page.growth" (click)="addService()">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
+                    <!-- <ng-container [ngTemplateOutlet]="footer"></ng-container> -->
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- ######################################################################################################################## -->
+
+
+        <ng-template #sndPage>
+            <div id="{{ i+1 }}" class="page">
+                <div class="content">
+                    <div resizeObserver (resize)="onResize($event)">
+                        <h1>Another Page</h1>
+                        <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+                            <div class="service-table" formArrayName="services">
+                                <ng-container 
+                                    *ngFor="let service of services.controls | slice:16; let j = index;"
+                                    [formGroupName]="j" 
+                                >
+                                <div id="service" *ngIf="page.growth; else elseBlock" >   
+                                    
+                                    <div class="pos">Pos.: {{page.start + j+1}} </div>
+                                    <textarea 
+                                        class="title"
+                                        formControlName="title"
+
+                                        autosize
+                                        [minRows]="1"
+
+                                        placeholder="Caption2"
+                                    >
+                                    </textarea>
+                                    <textarea 
+                                        class="detail"
+                                        formControlName="detail"
+
+                                        autosize
+                                        [minRows]="1"
+
+                                        placeholder="Describe2"
+
+                                    >
+                                    </textarea>
+                                    <div class="price">
+                                        <input
+                                            class="price"
+                                            formControlName="price"
+                                            AutoSizeInput
+                                            placeholder="Price"
+                                        >
+                                    </div>
+                                </div>
+                                <ng-template #elseBlock>
+                                    <div id="service" *ngIf="page.start + j < page.lastServiceElement">   
+                                    
+                                        <div class="pos">Pos.: {{page.start + j+1}}</div>
+                                        <textarea 
+                                            class="title"
+                                            formControlName="title"
+    
+                                            autosize
+                                            [minRows]="1"
+    
+                                            placeholder="caption2"
+                                        >
+                                        </textarea>
+                                        <textarea 
+                                            class="detail"
+                                            formControlName="detail"
+    
+                                            autosize
+                                            [minRows]="1"
+    
+                                            placeholder="Describe2"
+    
+                                        >
+                                        </textarea>
+                                        <div class="price">
+                                            <input
+                                                class="price"
+                                                formControlName="price"
+                                                AutoSizeInput
+                                                placeholder="Price"
+                                            >
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ng-container>
+                            <button mat-icon-button type="button" color="accent" *ngIf="page.growth" (click)="addService()"> 
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                            </div>
+                            <button type="submit" [disabled]="!invoiceForm.valid">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+    </form>
+
+
+
+
+</div>
+
+<ng-template #footer> 
+    <footer style="padding-top: 20px;">
+      <div>something</div>
+    </footer>
+</ng-template>
